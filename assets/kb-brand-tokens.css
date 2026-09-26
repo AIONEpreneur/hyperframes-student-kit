@@ -1,0 +1,35 @@
+/* Kirsten Biema — "KI, aber richtig". Paper / Violet identity.
+   Source of truth: kirstenbiema.com (assets/redesign/site.css). See DESIGN.kirsten-biema.md. */
+:root {
+  /* Surfaces */
+  --kb-paper: #faf9f6;        /* primary background (warm off-white) */
+  --kb-warm: #f0ede7;         /* cards, panels on paper */
+  --kb-surface: #ffffff;      /* raised card, lower-third plate */
+  --kb-lavender: #e9e2ff;     /* highlight sections, chips, callout boxes */
+  --kb-line: #e0dbe7;         /* hairlines, dividers, borders */
+
+  /* Ink */
+  --kb-ink: #242226;          /* primary text; also the dark canvas for takeovers */
+  --kb-muted: #706d76;        /* secondary / meta text on paper */
+
+  /* Accents */
+  --kb-violet: #7050e8;       /* THE brand accent: key words, numbers, CTAs, the ✳ */
+  --kb-violet-deep: #583ac9;  /* pressed / shadow side of violet */
+  --kb-violet-soft: #c7b9fc;  /* violet on dark backgrounds, soft fills */
+  --kb-apricot: #ffd5b8;      /* warm second accent, use sparingly */
+
+  /* Type */
+  --kb-font-display: "Space Grotesk", system-ui, sans-serif;
+  --kb-font-body: "Manrope", Arial, sans-serif;
+  --kb-font-mono: "Space Mono", ui-monospace, Menlo, monospace;
+
+  /* Shape */
+  --kb-radius-sm: 8px;        /* buttons, caption plates */
+  --kb-radius: 14px;          /* cards */
+  --kb-radius-lg: 20px;       /* big callout panels */
+  --kb-radius-portrait: 120px 16px 16px 16px; /* signature asymmetric photo frame */
+
+  /* Motion */
+  --kb-ease-in: cubic-bezier(0.22, 1, 0.36, 1);   /* ~ power3.out */
+  --kb-ease-soft: cubic-bezier(0.37, 0, 0.63, 1); /* ~ sine.inOut */
+}
