@@ -39,7 +39,8 @@ For one stage, load the matching local skill:
 Before a creative session read `MOTION_PHILOSOPHY.md` and the project's DESIGN.md.
 House brand: unless the user names another brand, new video projects use
 Kirsten Biema's identity from `DESIGN.kirsten-biema.md` and
-`assets/kb-brand-tokens.css`; copy both into the project and adapt its DESIGN.md.
+`assets/kb-brand-tokens.css`; copy both, plus `assets/kb-fonts.css` and
+`assets/kb-fonts/`, into the project and adapt its DESIGN.md.
 The philosophy's fast sizzle pacing is a style reference. Give educational speech
 room to breathe. The project brief controls pacing, palette, and typography.
 Framework skill contracts override historical code recipes in the style guide.

@@ -52,8 +52,10 @@ wie auf der Website).
   Das ist das Hausmuster: Eyebrow über Space-Grotesk-Headline.
 - **Space Mono:** nur für Code, Prompts, Terminal- und Tool-Screens.
 
-Alle drei sind Google Fonts. Für den finalen Render lokal einbinden (siehe README-Hinweis
-zu CDNs), damit HyperFrames nicht auf Ersatzschriften ausweicht.
+Alle drei sind Google Fonts (SIL OFL). **Immer lokal einbinden:** HyperFrames bettet
+sie nicht automatisch ein und rendert sonst Ersatzschriften. Dafür `assets/kb-fonts.css`
+und den Ordner `assets/kb-fonts/` ins Projekt-`assets/` kopieren und die CSS-Datei
+vor `kb-brand-tokens.css` laden. Das ✳ kommt aus der System-Ersatzschrift, wie auf der Website.
 
 Größen bei 1920×1080: Headline Takeover 110–150px, Headline Karte 64–80px,
 Body 34–40px, Eyebrow 20–22px, Caption 44–52px. Bei 1080×1920 (Reel) Headline
@@ -133,6 +135,10 @@ Keine Zoom-Punches, keine Glitches, keine Flashes.
 ## File References
 
 - `assets/kb-brand-tokens.css` — die `:root`-Variablen für jede Komposition
+- `assets/kb-fonts.css` + `assets/kb-fonts/` — lokale Schriftdateien (Space Grotesk, Manrope, Space Mono)
+- `examples/kb-brand-test/` — Referenz-Clip (16s): Titelkarte, Violett-Wipe, Lower-Third, Stat-Karte,
+  Wort-für-Wort-Captions, Ink-Outro. Neu rendern: `npm run new-video -- kb-test`, dann `index.html`
+  hierher kopieren und `kb-brand-tokens.css`, `kb-fonts.css`, `kb-fonts/` nach `assets/` legen.
 - Website: https://www.kirstenbiema.com (Referenz für Look & Tonalität)
 - Vorlage/Format: `DESIGN.ais-example.md`
 

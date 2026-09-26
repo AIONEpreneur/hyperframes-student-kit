@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Kirsten Biema — Brand-Test</title>
+<script src="assets/gsap.min.js"></script>
+<link rel="stylesheet" href="assets/kb-fonts.css">
+<link rel="stylesheet" href="assets/kb-brand-tokens.css">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;width:1920px;height:1080px;overflow:hidden;background:var(--kb-paper);color:var(--kb-ink);font-family:var(--kb-font-body)}
+#root{position:relative;width:1920px;height:1080px;overflow:hidden;background:var(--kb-paper)}
+.scene{position:absolute;inset:0;overflow:hidden}
+em{font-style:normal;color:var(--kb-violet)}
+.star{color:var(--kb-violet);display:inline-block}
+.eyebrow{font:800 22px/1.5 var(--kb-font-body);letter-spacing:.17em;text-transform:uppercase;color:var(--kb-violet)}
+.wordmark{font:700 40px/1.2 var(--kb-font-display);letter-spacing:-.06em;color:var(--kb-ink);display:inline-flex;align-items:baseline;gap:4px}
+.wordmark .star{font-size:1.05em}
+
+/* Scene 1 — title card (paper) */
+#s1{background:var(--kb-paper)}
+#s1 .aura{position:absolute;right:-260px;top:-300px;width:1100px;height:1100px;border-radius:50%;background:radial-gradient(circle,rgba(233,226,255,.9) 0%,rgba(233,226,255,0) 68%)}
+#s1 .scene-content{position:relative;width:100%;height:100%;padding:130px 150px 110px;display:flex;flex-direction:column;gap:36px}
+#s1 h1{font:500 124px/1.08 var(--kb-font-display);letter-spacing:-.035em;margin:10px 0 0;max-width:1450px}
+#s1 h1 .w{display:inline-block}
+#s1 .key{position:relative;display:inline-block}
+#s1 .key::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:8px;border-radius:4px;background:var(--kb-violet);transform-origin:left center;transform:scaleX(var(--u,1))}
+#s1 .sub{font:400 36px/1.6 var(--kb-font-body);color:var(--kb-muted);max-width:1100px;margin:0}
+#s1 .foot{margin-top:auto;display:flex;justify-content:space-between;align-items:center}
+#s1 .claim{font:700 24px var(--kb-font-body);color:var(--kb-muted)}
+#s1 .bigstar{position:absolute;right:190px;top:150px;font:500 150px/1 var(--kb-font-display);color:var(--kb-violet)}
+
+/* Wipe transition */
+#wipe{position:absolute;inset:0;z-index:20;background:var(--kb-violet)}
+
+/* Scene 2 — footage stand-in + lower third + side card + captions */
+#s2{background:#3a3540}
+#s2 .footage{position:absolute;inset:0;background:radial-gradient(ellipse at 40% 35%,#6b6272 0%,#4a4350 45%,#2f2b33 100%)}
+#s2 .silhouette{position:absolute;left:600px;bottom:0;width:560px;height:760px}
+#s2 .head{position:absolute;left:170px;top:90px;width:220px;height:270px;border-radius:50%;background:#26222a}
+#s2 .body{position:absolute;left:0;bottom:0;width:560px;height:380px;border-radius:280px 280px 0 0;background:#26222a}
+#s2 .ph{position:absolute;left:60px;top:54px;font:700 20px var(--kb-font-mono);letter-spacing:.08em;color:rgba(250,249,246,.55)}
+.lower{position:absolute;left:90px;top:560px;display:flex;align-items:center;gap:22px;padding:24px 34px 24px 28px;background:var(--kb-surface);border-radius:var(--kb-radius-sm);box-shadow:0 12px 25px rgba(36,34,38,.10)}
+.lower .star{font:500 50px/1 var(--kb-font-display)}
+.lower .name{font:500 44px/1.1 var(--kb-font-display);letter-spacing:-.03em}
+.lower .role{font:400 26px/1.4 var(--kb-font-body);color:var(--kb-muted)}
+.card{position:absolute;right:110px;top:150px;width:600px;padding:44px 46px;background:var(--kb-paper);border-radius:var(--kb-radius-lg);box-shadow:0 12px 25px rgba(36,34,38,.10)}
+.card .chip{display:inline-block;padding:9px 18px;border-radius:30px;background:var(--kb-lavender);color:var(--kb-violet);font:700 20px var(--kb-font-body)}
+.card .stat{font:500 150px/1 var(--kb-font-display);letter-spacing:-.04em;color:var(--kb-violet);margin:26px 0 8px;font-variant-numeric:tabular-nums}
+.card .stat small{font-size:60px;letter-spacing:-.02em}
+.card p{font:400 30px/1.5 var(--kb-font-body);color:var(--kb-muted);margin:0}
+.captions{position:absolute;left:0;right:0;bottom:80px;display:flex;justify-content:center}
+.phrase{position:absolute;bottom:0;padding:18px 34px;border-radius:var(--kb-radius-sm);background:rgba(250,249,246,.94);font:800 54px/1.25 var(--kb-font-body);color:var(--kb-ink);white-space:nowrap;opacity:0}
+.phrase span{display:inline-block}
+
+/* Scene 3 — ink outro */
+#s3{background:var(--kb-ink);color:var(--kb-paper)}
+#s3 .aura{position:absolute;left:50%;top:50%;width:1200px;height:1200px;margin:-600px 0 0 -600px;border-radius:50%;background:radial-gradient(circle,rgba(112,80,232,.28) 0%,rgba(36,34,38,0) 65%)}
+#s3 .scene-content{position:relative;width:100%;height:100%;padding:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:40px;text-align:center}
+#s3 .wordmark{font-size:150px;color:var(--kb-paper)}
+#s3 .wordmark .star{color:var(--kb-violet-soft)}
+#s3 .claim{font:500 56px/1.2 var(--kb-font-display);letter-spacing:-.03em;margin:0}
+#s3 .claim em{color:var(--kb-violet-soft)}
+#s3 .cta{display:inline-flex;align-items:center;gap:24px;margin-top:20px;padding:26px 38px;border-radius:var(--kb-radius-sm);background:var(--kb-violet);color:#fff;font:700 32px var(--kb-font-body)}
+</style></head><body>
+<div id="root" data-composition-id="kb-brand-test" data-start="0" data-duration="16" data-width="1920" data-height="1080">
+
+  <div id="s1" class="scene clip" data-start="0" data-duration="5.2" data-track-index="1">
+    <div class="aura"></div>
+    <div class="bigstar" id="s1-star">✳</div>
+    <div class="scene-content">
+      <div class="eyebrow" id="s1-eyebrow">KI, aber richtig</div>
+      <h1 id="s1-h1"><span class="w">Dein</span> <span class="w">Business</span> <span class="w">braucht</span> <span class="w">dich.</span> <span class="w">Aber</span> <span class="w">nicht</span> <em class="w key" id="s1-key">rund&nbsp;um&nbsp;die&nbsp;Uhr.</em></h1>
+      <p class="sub" id="s1-sub">Abläufe, die dir Arbeit abnehmen. Und ein Sichtbarkeitssystem, das ohne dich läuft.</p>
+      <div class="foot" id="s1-foot"><span class="wordmark">kirsten biema<span class="star">✳</span></span><span class="claim">Business-Mentorin für Solo-Unternehmerinnen</span></div>
+    </div>
+  </div>
+
+  <div id="wipe" class="clip" data-start="4.6" data-duration="1.2" data-track-index="3"></div>
+
+  <div id="s2" class="scene clip" data-start="5.2" data-duration="6.4" data-track-index="1">
+    <div class="footage"><div class="silhouette"><div class="head"></div><div class="body"></div></div></div>
+    <div class="ph">PLATZHALTER · HIER LÄUFT DEIN VIDEO</div>
+    <div class="lower" id="s2-lower"><span class="star" id="s2-lstar">✳</span><div><div class="name">Kirsten Biema</div><div class="role">Business-Mentorin · KI, aber richtig</div></div></div>
+    <div class="card" id="s2-card"><span class="chip">Ergebnis</span><div class="stat"><span id="s2-num">0</span><small> Std.</small></div><p>pro Woche zurück, ohne Tool-Chaos.</p></div>
+    <div class="captions">
+      <div class="phrase" id="p1"><span>Heute</span> <span>zeige</span> <span>ich</span> <span>dir,</span></div>
+      <div class="phrase" id="p2"><span>wie</span> <span>KI</span> <span>dir</span> <span>jede</span> <span>Woche</span></div>
+      <div class="phrase" id="p3"><span>drei</span> <span>Stunden</span> <span>zurückgibt.</span></div>
+    </div>
+  </div>
+
+  <div id="s3" class="scene clip" data-start="11.1" data-duration="4.9" data-track-index="2">
+    <div class="aura"></div>
+    <div class="scene-content">
+      <div class="wordmark" id="s3-mark">kirsten biema<span class="star" id="s3-star">✳</span></div>
+      <p class="claim" id="s3-claim">KI, aber <em>richtig</em>.</p>
+      <div class="cta" id="s3-cta">Lass uns sprechen <span>↗</span></div>
+    </div>
+  </div>
+</div>
+<script>
+const tl = gsap.timeline({ paused: true });
+
+// Scene 1 — title card
+tl.from('#s1 .aura', { scale: .85, opacity: 0, duration: 3.5, ease: 'sine.inOut' }, 0);
+tl.from('#s1-eyebrow', { y: 16, opacity: 0, duration: .5, ease: 'power3.out' }, .2);
+tl.from('#s1-h1 .w', { y: 24, opacity: 0, duration: .8, stagger: .1, ease: 'expo.out' }, .45);
+tl.fromTo('#s1-key', { '--u': 0 }, { '--u': 1, duration: .6, ease: 'power3.out' }, 1.55);
+tl.from('#s1-star', { rotation: -90, scale: .6, opacity: 0, duration: .9, ease: 'back.out(1.2)' }, 1.2);
+tl.from('#s1-sub', { y: 18, opacity: 0, duration: .7, ease: 'power3.out' }, 1.9);
+tl.from('#s1-foot', { opacity: 0, duration: .8, ease: 'sine.inOut' }, 2.4);
+
+// Violet wipe: paper → violet → footage (covers the cut at 5.2s)
+tl.fromTo('#wipe', { xPercent: -100 }, { xPercent: 0, duration: .6, ease: 'power3.inOut' }, 4.6);
+tl.fromTo('#wipe', { xPercent: 0 }, { xPercent: 100, duration: .6, ease: 'power3.inOut' }, 5.2);
+
+// Scene 2 — lower third, side card, captions
+tl.from('#s2 .footage', { scale: 1.06, duration: 6.4, ease: 'sine.inOut' }, 5.2);
+tl.from('#s2-lower', { x: -40, opacity: 0, duration: .6, ease: 'power3.out' }, 5.9);
+tl.from('#s2-lstar', { rotation: -90, duration: .7, ease: 'back.out(1.2)' }, 6.0);
+tl.from('#s2-card', { y: 30, opacity: 0, duration: .7, ease: 'expo.out' }, 9.2);
+tl.from('#s2-num', { innerText: 0, duration: 1, snap: { innerText: 1 }, ease: 'power2.out' }, 9.4);
+tl.set('#s2-num', { innerText: 3 }, 10.4);
+
+// Captions: phrase swaps + active word in violet
+const phrases = [
+  { id: '#p1', start: 6.1, end: 7.7, words: [6.1, 6.45, 6.8, 7.1] },
+  { id: '#p2', start: 7.7, end: 9.4, words: [7.7, 8.0, 8.35, 8.65, 9.0] },
+  { id: '#p3', start: 9.4, end: 11.6, words: [9.4, 9.75, 10.2] },
+];
+phrases.forEach((p) => {
+  tl.fromTo(p.id, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .25, ease: 'power2.out' }, p.start);
+  const spans = document.querySelectorAll(p.id + ' span');
+  p.words.forEach((t, i) => {
+    tl.set(spans[i], { color: '#7050e8' }, t);
+    const next = i + 1 < p.words.length ? p.words[i + 1] : Math.min(p.end, t + .6);
+    tl.set(spans[i], { color: '#242226' }, next);
+  });
+  if (p.end < 11.1) tl.set(p.id, { opacity: 0 }, p.end);
+});
+
+// Scene 3 — ink outro (blur crossfade in over scene 2)
+tl.fromTo('#s3', { opacity: 0, filter: 'blur(14px)' }, { opacity: 1, filter: 'blur(0px)', duration: .6, ease: 'sine.inOut' }, 11.1);
+tl.from('#s3 .aura', { scale: .7, opacity: 0, duration: 2.5, ease: 'sine.inOut' }, 11.3);
+tl.from('#s3-mark', { y: 30, opacity: 0, duration: .9, ease: 'expo.out' }, 11.5);
+tl.from('#s3-star', { rotation: -90, duration: .8, ease: 'back.out(1.2)' }, 11.7);
+tl.from('#s3-claim', { y: 20, opacity: 0, duration: .7, ease: 'power3.out' }, 12.1);
+tl.from('#s3-cta', { y: 20, opacity: 0, duration: .6, ease: 'power3.out' }, 12.6);
+tl.to('#s3 .scene-content', { opacity: 0, duration: .8, ease: 'power2.in' }, 15.1);
+
+window.__timelines = window.__timelines || {};
+window.__timelines['kb-brand-test'] = tl;
+</script></body></html>
