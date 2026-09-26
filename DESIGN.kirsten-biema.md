@@ -139,6 +139,8 @@ Keine Zoom-Punches, keine Glitches, keine Flashes.
 - `examples/kb-brand-test/` — Referenz-Clip (16s): Titelkarte, Violett-Wipe, Lower-Third, Stat-Karte,
   Wort-für-Wort-Captions, Ink-Outro. Neu rendern: `npm run new-video -- kb-test`, dann `index.html`
   hierher kopieren und `kb-brand-tokens.css`, `kb-fonts.css`, `kb-fonts/` nach `assets/` legen.
+- `examples/kb-brand-test-reel/` — dieselben Bausteine als 9:16-Reel (1080×1920, 15s). Text bleibt im
+  Phone-Safe-Bereich x 90–930, y 200–1600; Hook steht in der ersten Sekunde, kein Logo-Bumper.
 - Website: https://www.kirstenbiema.com (Referenz für Look & Tonalität)
 - Vorlage/Format: `DESIGN.ais-example.md`
 
