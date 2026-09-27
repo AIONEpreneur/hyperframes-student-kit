@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Was Claude in deinem Business macht</title>
+<script src="assets/gsap.min.js"></script>
+<link rel="stylesheet" href="assets/kb-fonts.css">
+<link rel="stylesheet" href="assets/kb-brand-tokens.css">
+<style>
+/* 1080x1920 reel, Ink mode. Phone-safe text region: x 90..930, y 200..1600. */
+:root{--dim:#b3adbb;--panel:#2e2b33;--panel-line:#3e3a45}
+*{box-sizing:border-box}
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:var(--kb-ink);color:var(--kb-paper);font-family:var(--kb-font-body)}
+#root{position:relative;width:1080px;height:1920px;overflow:hidden;background:var(--kb-ink)}
+.dots{position:absolute;inset:-60px;background-image:radial-gradient(rgba(199,185,252,.16) 2px,rgba(36,34,38,0) 2.5px);background-size:48px 48px}
+.aura{position:absolute;width:1300px;height:1300px;border-radius:50%;background:radial-gradient(circle,rgba(112,80,232,.34) 0%,rgba(36,34,38,0) 65%)}
+.scene{position:absolute;inset:0;overflow:hidden}
+em{font-style:normal;color:var(--kb-violet-soft)}
+.eyebrow{font:800 26px/1.5 var(--kb-font-body);letter-spacing:.17em;text-transform:uppercase;color:var(--kb-violet-soft)}
+.wordmark{font:700 40px/1.2 var(--kb-font-display);letter-spacing:-.06em;display:inline-flex;align-items:baseline;gap:4px}
+.wordmark .star{color:var(--kb-violet-soft)}
+
+/* S1 — hook: headline + prompt being typed */
+#s1 .content{position:absolute;inset:0;padding:230px 150px 320px 90px;display:flex;flex-direction:column}
+#s1 h1{font:500 124px/1.02 var(--kb-font-display);letter-spacing:-.045em;margin:190px 0 0}
+#s1 h1 .w{display:inline-block}
+.chat{margin-top:120px;width:840px;padding:34px 34px 30px;border-radius:28px;background:var(--panel);border:2px solid var(--panel-line)}
+.chat .label{font:700 24px var(--kb-font-body);color:var(--dim);display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.chat .label .star{color:var(--kb-violet-soft);font-size:30px}
+.chat .row{display:flex;align-items:flex-end;justify-content:space-between;gap:24px}
+.chat .typed{font:500 46px/1.35 var(--kb-font-body);color:var(--kb-paper);min-height:124px;max-width:640px}
+.chat .typed .c{opacity:0}
+.cursor{display:inline-block;width:4px;height:48px;background:var(--kb-violet-soft);vertical-align:-8px;margin-left:4px}
+.send{flex:none;width:92px;height:92px;border-radius:50%;background:var(--kb-violet);display:flex;align-items:center;justify-content:center;font:700 48px var(--kb-font-display);color:#fff}
+
+/* Star zoom-through transition */
+#burst{position:absolute;left:0;top:0;width:1080px;height:1920px;z-index:30;display:flex;align-items:center;justify-content:center;pointer-events:none}
+#burst span{position:relative;font:500 220px/1 var(--kb-font-display);color:var(--kb-violet);display:inline-block}
+#burst-disc{position:absolute;left:440px;top:860px;width:200px;height:200px;border-radius:50%;background:var(--kb-violet)}
+
+/* S2 — slot machine of roles */
+#s2 .content{position:absolute;inset:0;padding:230px 150px 320px 90px;display:flex;flex-direction:column;justify-content:center;gap:10px}
+#s2 .lead span{display:block}
+#s2 .lead{font:500 76px/1.15 var(--kb-font-display);letter-spacing:-.035em;margin:0}
+.slot{height:136px;overflow:hidden;position:relative}
+.slot .reel{position:absolute;left:0;top:0}
+.slot .item{height:136px;font:500 112px/136px var(--kb-font-display);letter-spacing:-.045em;white-space:nowrap}
+.slot .item.final{color:var(--kb-violet-soft)}
+#s2 .aside{font:500 40px/1.4 var(--kb-font-body);color:var(--dim);margin-top:40px}
+#s2 .aside em{color:var(--kb-violet-soft)}
+
+/* S3 — stacked proof cards */
+#s3 .head{position:absolute;left:90px;top:230px}
+.card{position:absolute;left:90px;top:400px;width:840px;height:980px;padding:56px 50px;border-radius:32px;background:#2b2830;border:2px solid var(--panel-line);box-shadow:0 30px 60px rgba(0,0,0,.35);transform-origin:50% 0%}
+.card .tag{display:inline-block;padding:10px 20px;border-radius:30px;background:rgba(112,80,232,.22);color:var(--kb-violet-soft);font:800 24px var(--kb-font-body);letter-spacing:.12em;text-transform:uppercase}
+.card h2{font:500 72px/1.08 var(--kb-font-display);letter-spacing:-.035em;margin:34px 0 0}
+.card .foot{position:absolute;left:50px;right:50px;bottom:50px;font:500 40px/1.35 var(--kb-font-body);color:var(--dim)}
+.card .foot em{font-weight:700}
+
+/* card 1: voice memo → content */
+.memo{position:absolute;left:190px;top:330px;width:460px;height:120px;border-radius:60px;background:var(--kb-violet);display:flex;align-items:center;gap:22px;padding:0 36px}
+.memo .play{font:700 40px var(--kb-font-display);color:#fff}
+.memo .bars{display:flex;align-items:center;gap:9px;height:70px}
+.memo .bars i{display:block;width:9px;border-radius:5px;background:rgba(255,255,255,.9)}
+.memo .len{font:700 30px var(--kb-font-mono);color:#fff;margin-left:auto}
+.chips{position:absolute;left:50px;right:50px;top:520px;display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.chip{height:120px;border-radius:20px;background:var(--panel);border:2px solid var(--panel-line);display:flex;flex-direction:column;justify-content:center;padding:0 28px}
+.chip b{font:500 54px/1 var(--kb-font-display);color:var(--kb-violet-soft)}
+.chip span{font:700 26px/1.3 var(--kb-font-body);color:var(--kb-paper);margin-top:6px}
+
+/* card 2: inbox zero */
+.inbox{position:absolute;left:50px;top:300px;display:flex;align-items:baseline;gap:22px}
+.inbox .num{font:500 230px/1 var(--kb-font-display);letter-spacing:-.05em;color:var(--kb-violet-soft);font-variant-numeric:tabular-nums}
+.inbox .unit{font:700 34px/1.3 var(--kb-font-body);color:var(--dim);max-width:260px}
+.checks{position:absolute;left:50px;top:590px;display:flex;flex-direction:column;gap:22px}
+.check{display:flex;align-items:center;gap:22px;font:600 40px/1.2 var(--kb-font-body)}
+.check i{flex:none;width:54px;height:54px;border-radius:50%;background:var(--kb-violet);color:#fff;font:700 30px/54px var(--kb-font-body);font-style:normal;text-align:center}
+
+/* card 3: app without code */
+.phone{position:absolute;left:50px;top:340px;width:300px;height:560px;border-radius:44px;border:4px solid #57515f;padding:40px 24px;display:flex;flex-direction:column;gap:18px;background:#221f26}
+.phone .b{height:30px;border-radius:10px;background:#443f4b;transform-origin:left center}
+.phone .b.hero{height:130px;border-radius:18px;background:rgba(112,80,232,.45)}
+.phone .b.btn{height:64px;border-radius:32px;background:var(--kb-violet);margin-top:auto}
+.phone .b.s{width:70%}
+.lines{position:absolute;left:400px;right:50px;top:380px;display:flex;flex-direction:column;gap:34px}
+.lines div{font:500 56px/1.1 var(--kb-font-display);letter-spacing:-.03em}
+.lines .last{color:var(--kb-violet-soft)}
+
+/* S4 — twist + outro */
+#s4 .code{position:absolute;left:90px;right:60px;top:0;font:700 26px/1.9 var(--kb-font-mono);color:rgba(199,185,252,.08);white-space:pre}
+#s4 .content{position:absolute;inset:0;padding:230px 150px 320px 90px;display:flex;flex-direction:column;justify-content:center;gap:30px}
+#s4 .small{font:700 40px var(--kb-font-body);color:var(--dim)}
+#s4 h2{font:500 118px/1.02 var(--kb-font-display);letter-spacing:-.045em;margin:0}
+#s4 h2 .w{display:inline-block}
+#s4 .sign{margin-top:90px;display:flex;flex-direction:column;gap:26px}
+#s4 .sign .wordmark{font-size:84px}
+#s4 .sign .claim{font:500 44px var(--kb-font-display);letter-spacing:-.02em}
+#s4 .cta{align-self:flex-start;display:inline-flex;gap:20px;padding:26px 38px;border-radius:var(--kb-radius-sm);background:var(--kb-violet);color:#fff;font:700 36px var(--kb-font-body)}
+</style></head><body>
+<div id="root" data-composition-id="claude-business-reel" data-start="0" data-duration="15" data-width="1080" data-height="1920">
+
+  <div id="bg" class="clip" data-start="0" data-duration="15" data-track-index="0" style="position:absolute;inset:0">
+    <div class="dots" id="dots"></div>
+    <div class="aura" id="aura" style="left:-300px;top:-250px"></div>
+  </div>
+
+  <!-- S1: hook -->
+  <div id="s1" class="scene clip" data-start="0" data-duration="3.0" data-track-index="1">
+    <div class="content">
+      <span class="wordmark" id="s1-mark">kirsten biema<span class="star">✳</span></span>
+      <h1 id="s1-h1"><span class="w">Du</span> <span class="w">machst</span> <span class="w">alles</span> <em class="w">allein?</em></h1>
+      <div class="chat" id="chat">
+        <div class="label"><span class="star">✳</span>Nachricht an Claude</div>
+        <div class="row"><div class="typed" id="typed">Was kannst du für mein Business tun?</div><div class="send" id="send">↑</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="burst" class="clip" data-start="2.45" data-duration="1.1" data-track-index="4"><div id="burst-disc"></div><span id="burst-star">✳</span></div>
+
+  <!-- S2: roles slot machine -->
+  <div id="s2" class="scene clip" data-start="3.05" data-duration="3.15" data-track-index="2">
+    <div class="content">
+      <p class="lead" id="s2-lead"><span>Ab heute ist</span><span>Claude deine</span></p>
+      <div class="slot"><div class="reel" id="reel">
+        <div class="item">Texterin.</div><div class="item">Assistentin.</div><div class="item">Designerin.</div>
+        <div class="item">Analystin.</div><div class="item">Entwicklerin.</div><div class="item final">ganze Crew.</div>
+      </div></div>
+      <div class="aside" id="s2-aside">Und die Crew <em>schläft nie.</em></div>
+    </div>
+  </div>
+
+  <!-- S3: three concrete proofs, stacking -->
+  <div id="s3" class="scene clip" data-start="5.6" data-duration="7.1" data-track-index="1">
+    <div class="head eyebrow" id="s3-head">Was das konkret heißt</div>
+
+    <div class="card" id="c1">
+      <span class="tag">Content</span>
+      <h2>Eine Sprach&shy;nachricht rein …</h2>
+      <div class="memo" id="memo"><span class="play">▶</span><div class="bars" id="bars"></div><span class="len">4:12</span></div>
+      <div class="chips">
+        <div class="chip"><b>5</b><span>Instagram-Posts</span></div>
+        <div class="chip"><b>1</b><span>Newsletter</span></div>
+        <div class="chip"><b>1</b><span>Blogartikel</span></div>
+        <div class="chip"><b>3</b><span>Reel-Hooks</span></div>
+      </div>
+      <div class="foot" id="c1-foot">… eine Woche Content raus. <em>In deiner Stimme.</em></div>
+    </div>
+
+    <div class="card" id="c2">
+      <span class="tag">Postfach</span>
+      <h2>Montag, 7:30 Uhr.</h2>
+      <div class="inbox"><span class="num" id="cnt">247</span><span class="unit">ungelesene Mails</span></div>
+      <div class="checks">
+        <div class="check"><i>✓</i>sortiert</div>
+        <div class="check"><i>✓</i>priorisiert</div>
+        <div class="check"><i>✓</i>Antworten vorbereitet</div>
+      </div>
+      <div class="foot" id="c2-foot">Du klickst nur noch <em>Senden.</em></div>
+    </div>
+
+    <div class="card" id="c3">
+      <span class="tag">Eigene App</span>
+      <h2>Dein Quiz. Dein Rechner. Dein Tool.</h2>
+      <div class="phone" id="phone">
+        <div class="b s"></div><div class="b hero"></div><div class="b"></div><div class="b s"></div><div class="b"></div><div class="b btn"></div>
+      </div>
+      <div class="lines">
+        <div>Idee am Montag.</div>
+        <div>Live am Mittwoch.</div>
+        <div class="last">Ohne eine Zeile Code von dir.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S4: twist + sign-off -->
+  <div id="s4" class="scene clip" data-start="12.1" data-duration="2.9" data-track-index="2">
+    <div class="code" id="code"></div>
+    <div class="content">
+      <div class="small" id="s4-small">Übrigens:</div>
+      <h2 id="s4-h2"><span class="w">Dieses</span> <span class="w">Video</span> <span class="w">hat</span> <em class="w">Claude</em> <em class="w">gebaut.</em></h2>
+      <div class="sign" id="sign">
+        <span class="wordmark">kirsten biema<span class="star">✳</span></span>
+        <span class="claim">KI, aber <em>richtig</em>.</span>
+        <span class="cta" id="cta">Lass uns sprechen <span>↗</span></span>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+// --- deterministic DOM prep (synchronous) ---
+const typed = document.getElementById('typed');
+typed.innerHTML = typed.textContent.split('').map(ch => ch === ' ' ? ' ' : '<span class="c">' + ch + '</span>').join('') + '<span class="cursor" id="cursor"></span>';
+const barHeights = [26, 48, 64, 38, 58, 70, 44, 30, 56, 66, 40, 24, 50, 36];
+document.getElementById('bars').innerHTML = barHeights.map(h => '<i style="height:' + h + 'px"></i>').join('');
+const codeLines = [
+  '<div data-composition-id="claude-business-reel">', '  <div id="s1" class="scene clip" data-start="0">', '    <h1>Du machst alles allein?</h1>',
+  'const tl = gsap.timeline({ paused: true });', "tl.from('#s1-h1 .w', { y: 40, stagger: .07 });", "tl.to('#reel', { y: -680, ease: 'back.out' });",
+  "tl.to('#cnt', { innerText: 0, snap: 1 });", '  <div class="card" id="c3">', "    <span class=\"tag\">Eigene App</span>", '--kb-violet: #7050e8;',
+  '--kb-font-display: "Space Grotesk";', "tl.fromTo('#s4', { clipPath: 'circle(0%)' });", 'npx hyperframes render --output reel.mp4', '✓ 450 frames · 1080x1920 · 15.0s',
+  "window.__timelines['claude-business-reel'] = tl;", '</div>'
+];
+document.getElementById('code').textContent = codeLines.concat(codeLines, codeLines).join('\n');
+
+const tl = gsap.timeline({ paused: true });
+
+// Ambient background (whole piece)
+tl.fromTo('#dots', { y: 0 }, { y: -48, duration: 15, ease: 'none' }, 0);
+tl.fromTo('#aura', { x: 0, y: 0, scale: .9 }, { x: 420, y: 900, scale: 1.1, duration: 15, ease: 'sine.inOut' }, 0);
+
+// S1 — hook: question lands in <1s, prompt types, send
+tl.from('#s1-mark', { opacity: 0, duration: .4, ease: 'power2.out' }, .1);
+tl.from('#s1-h1 .w', { y: 60, opacity: 0, rotation: 4, duration: .6, stagger: .09, ease: 'expo.out' }, .12);
+tl.from('#chat', { y: 50, opacity: 0, scale: .96, duration: .5, ease: 'power3.out' }, .75);
+tl.to('#typed .c', { opacity: 1, duration: .01, stagger: .033, ease: 'none' }, 1.0);
+tl.fromTo('#cursor', { opacity: 1 }, { opacity: 0, duration: .25, repeat: 5, yoyo: true, ease: 'steps(1)' }, .9);
+tl.fromTo('#send', { scale: 1 }, { scale: .82, duration: .1, yoyo: true, repeat: 1, ease: 'power2.inOut' }, 2.3);
+
+// Star zoom-through: the ✳ bursts from the send button and swallows the frame
+tl.fromTo('#burst-star', { x: 330, y: 170, scale: .2, rotation: 0 }, { x: 0, y: 0, scale: 18, rotation: 180, duration: .6, ease: 'power3.in' }, 2.45);
+tl.fromTo('#burst-disc', { x: 330, y: 170, scale: 0 }, { x: 0, y: 0, scale: 13, duration: .5, ease: 'power3.in' }, 2.6);
+tl.fromTo('#burst-star', { color: '#7050e8' }, { color: '#faf9f6', duration: .15, ease: 'none' }, 2.85);
+tl.fromTo('#burst', { opacity: 1 }, { opacity: 0, duration: .4, ease: 'sine.inOut' }, 3.1);
+
+// S2 — role slot machine that lands on "ganze Crew."
+tl.from('#s2-lead span', { y: 30, opacity: 0, duration: .5, stagger: .1, ease: 'power3.out' }, 3.15);
+const stepH = 136, steps = [[.22, 'power2.in'], [.18, 'none'], [.18, 'none'], [.24, 'power1.out'], [.5, 'back.out(1.6)']];
+let tt = 3.45;
+steps.forEach(([d, e], i) => { tl.to('#reel', { y: -stepH * (i + 1), duration: d, ease: e }, tt); tt += d + .1; });
+tl.from('#reel .final', { scale: .9, transformOrigin: 'left center', duration: .5, ease: 'back.out(2)' }, tt - .45);
+tl.from('#s2-aside', { y: 20, opacity: 0, duration: .5, ease: 'power3.out' }, 5.0);
+
+// S2 → S3: push up
+tl.to('#s2', { yPercent: -100, duration: .55, ease: 'power3.inOut' }, 5.6);
+tl.from('#s3', { yPercent: 100, duration: .55, ease: 'power3.inOut' }, 5.6);
+tl.from('#s3-head', { opacity: 0, x: -20, duration: .4, ease: 'power2.out' }, 6.0);
+
+// Card 1 — voice memo multiplies into a week of content
+tl.from('#c1', { y: 120, opacity: 0, duration: .5, ease: 'expo.out' }, 5.85);
+tl.from('#memo', { scale: .6, opacity: 0, duration: .45, ease: 'back.out(1.8)' }, 6.2);
+tl.fromTo('#bars i', { scaleY: .3 }, { scaleY: 1, duration: .18, yoyo: true, repeat: 5, stagger: { each: .04, from: 'center' }, ease: 'sine.inOut' }, 6.3);
+const dx = [155, -155, 155, -155], dy = [-230, -230, -372, -372];
+tl.from('#c1 .chip', { x: i => dx[i], y: i => dy[i], scale: .2, opacity: 0, duration: .55, stagger: .09, ease: 'back.out(1.4)' }, 6.8);
+tl.from('#c1-foot', { y: 16, opacity: 0, duration: .4, ease: 'power2.out' }, 7.35);
+
+// Card 2 slides over card 1 — inbox counts to zero
+tl.to('#c1', { scale: .93, y: -46, opacity: .45, duration: .5, ease: 'power3.out' }, 8.2);
+tl.from('#c2', { y: 1600, duration: .6, ease: 'expo.out' }, 8.15);
+tl.to('#cnt', { innerText: 0, snap: { innerText: 1 }, duration: 1.1, ease: 'power2.inOut' }, 8.6);
+tl.from('#c2 .check', { x: -30, opacity: 0, duration: .35, stagger: .28, ease: 'power3.out' }, 8.75);
+tl.from('#c2 .check i', { scale: 0, rotation: -90, duration: .35, stagger: .28, ease: 'back.out(2)' }, 8.8);
+tl.from('#c2-foot', { y: 16, opacity: 0, duration: .4, ease: 'power2.out' }, 9.7);
+
+// Card 3 slides over — an app builds itself
+tl.to('#c1', { scale: .86, y: -92, opacity: .25, duration: .5, ease: 'power3.out' }, 10.2);
+tl.to('#c2', { scale: .93, y: -46, opacity: .45, duration: .5, ease: 'power3.out' }, 10.2);
+tl.from('#c3', { y: 1600, duration: .6, ease: 'expo.out' }, 10.15);
+tl.from('#phone', { rotation: -8, y: 40, opacity: 0, duration: .55, ease: 'back.out(1.4)' }, 10.45);
+tl.from('#phone .b', { scaleX: 0, duration: .3, stagger: .1, ease: 'power3.out' }, 10.7);
+tl.from('#c3 .lines div', { y: 24, opacity: 0, duration: .4, stagger: .3, ease: 'expo.out' }, 10.8);
+
+// S3 → S4: circular reveal from the centre
+tl.fromTo('#s4', { clipPath: 'circle(0% at 50% 50%)' }, { clipPath: 'circle(75% at 50% 50%)', duration: .6, ease: 'power3.inOut' }, 12.1);
+tl.fromTo('#code', { y: 0 }, { y: -700, duration: 2.9, ease: 'none' }, 12.1);
+tl.from('#s4-small', { opacity: 0, y: 14, duration: .35, ease: 'power2.out' }, 12.45);
+tl.from('#s4-h2 .w', { y: 50, opacity: 0, duration: .5, stagger: .08, ease: 'expo.out' }, 12.55);
+tl.from('#sign', { y: 30, opacity: 0, duration: .5, ease: 'power3.out' }, 13.4);
+tl.from('#cta', { scale: .85, opacity: 0, duration: .45, ease: 'back.out(1.6)' }, 13.8);
+
+window.__timelines = window.__timelines || {};
+window.__timelines['claude-business-reel'] = tl;
+</script></body></html>
