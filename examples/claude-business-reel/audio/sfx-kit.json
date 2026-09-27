@@ -1,0 +1,16 @@
+{
+  "bed":     ["calm warm ambient electronic pad with a soft steady pulse, minimal and modern, optimistic, no drums, no vocals, seamless", 15],
+  "whoosh":  ["soft airy whoosh, gentle and clean, short", 0.6],
+  "typing":  ["fast quiet laptop keyboard typing, close mic, clean, no room noise", 1.4],
+  "click":   ["single soft mouse click, crisp and clean", 0.5],
+  "riser":   ["short soft rising airy swell into an impact, cinematic but gentle", 0.8],
+  "impact":  ["soft deep warm sub boom impact, round, no distortion", 1.2],
+  "tick":    ["single short mechanical slot machine reel tick, clean", 0.5],
+  "ding":    ["bright pleasant success chime, single warm bell tone", 1.0],
+  "pop":     ["small soft bubble pop, playful clean UI sound", 0.5],
+  "counter": ["fast subtle digital counter ticking down, soft UI blips", 1.2],
+  "blip":    ["soft positive confirmation UI blip, short", 0.5],
+  "build":   ["gentle soft UI element placement clicks, light", 0.8],
+  "shimmer": ["soft magical shimmer sparkle reveal, airy and warm", 1.2],
+  "notif":   ["gentle modern notification chime, two warm notes", 0.8]
+}
